@@ -1,0 +1,40 @@
+# input is 601 lines long
+accLast = 0
+accCurrent = 0
+inputList = [] * 601
+visitedList = [] * 601
+lineInt = 0
+# print("\\n")
+# setting the visited list to false for all values
+for i in range(602):
+    visitedList.append(False)
+
+with open("input.txt") as fileO:
+    file = list(fileO)
+    lenVar = len(file)
+    while True:
+        line = file[lineInt]
+        print(str(lineInt) + ". Has it been visited? " + str(visitedList[lineInt]))
+        if visitedList[lineInt]:
+            print(accCurrent)
+            break
+        accChange = 0
+        x = line.split(" ")
+        x[1].replace("\\n", "")
+        # print(x)
+
+        if x[0] == "acc":
+            accLast = accCurrent
+            accCurrent = accCurrent + int(x[1])
+            # print("found acc on line number " + str(lineInt) + " and added " + x[1])
+            visitedList[lineInt] = True
+            lineInt += 1
+
+        elif x[0] == "jmp":
+            visitedList[lineInt] = True
+            print(lineInt)
+            lineInt = lineInt + int(x[1])
+            print(str(lineInt) + "\n \n")
+        else:
+            visitedList[lineInt] = True
+            lineInt += 1

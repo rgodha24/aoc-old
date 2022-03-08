@@ -1,0 +1,66 @@
+def checkSeat(line, lineBefore, lineAfter, letterInt, lineInt):
+    occupiedNumber = 0
+
+    # checking if needs to be occupied
+    # checking if top line exists
+    if lineInt != 0:
+        if letterInt != 0:
+            if lineBefore[letterInt - 1] == "#":
+                occupiedNumber += 1
+        if lineBefore[letterInt] == "#":
+            occupiedNumber += 1
+        if letterInt != len(line):
+            if lineBefore[letterInt + 1] == "#":
+                occupiedNumber += 1
+
+    # middle line
+    if letterInt != 0:
+        if line[letterInt - 1] == "#":
+            occupiedNumber += 1
+
+    # print("letterInt is " + str(letterInt) + " and the len of line is " + str(len(line)) + " and middle is " + line[letterInt])
+    if letterInt -1 != len(line):
+        if line[letterInt + 1] == "#":
+            occupiedNumber += 1
+
+        # bottom line
+    if line != lineAfter:
+        if letterInt != 0:
+            if lineAfter[letterInt - 1] == "#":
+                occupiedNumber += 1
+        if lineAfter[letterInt] == "#":
+            occupiedNumber += 1
+        if letterInt != len(line):
+            if lineAfter[letterInt + 1] == "#":
+                occupiedNumber += 1
+
+    if occupiedNumber == 0 and line[letterInt] == "L":
+        return "#"
+
+    elif 1 <= occupiedNumber < 4:
+        return line[letterInt]
+
+    elif line[letterInt] == "#" and occupiedNumber >= 4:
+        return "L"
+
+    else:
+        return "."
+
+
+with open("input.txt") as fileInput:
+    file = list(fileInput)
+    lineBefore = " "
+    newFile = file.copy()
+    for lineInt in range(len(file)):
+        if lineInt > 0:
+            lineBefore = file[lineInt - 1]
+        line = file[lineInt]
+        if lineInt != len(file):
+            lineAfter = file[lineInt + 1]
+        newLine = ""
+        for letterInt in range(len(line)):
+            newLine = newLine + checkSeat(line, lineBefore, lineAfter, letterInt, lineInt)
+            print(newLine)
+        newFile[lineInt] = newLine
+
+    print(newFile)

@@ -1,0 +1,59 @@
+passengerID = 0
+x = [] * 300
+iterateNumber = 0
+dataPointCount = 0
+correctCount = 0
+entryNumber = 0
+with open("passport.txt") as file:
+    for line in file:
+        for letterNumber in range(len(line)):
+            letter1 = line[letterNumber]
+            # finding if it is a new line and checking if there were enough data points
+            if letter1 == "\n" and len(line) == 1:
+                entryNumber += 1
+                if dataPointCount >= 14:
+                    correctCount += 1
+                    print("entry number " + str(entryNumber) + " is correct. Correct number: " + str(correctCount))
+                dataPointCount = 0
+            # if it is not a new line, do this.
+            else:
+                # making sure that the index is in range
+                if len(line) > letterNumber + 2:
+                    letter2 = line[letterNumber + 1]
+                    letter3 = line[letterNumber + 2]
+                    combinedString = str(letter1) + str(letter2) + str(letter3)
+
+                    # finding byr, iyr, eyr, hgt, hcl, ecl, or pid and counting if they were found.
+                    if True:
+                        # byr iyr eyr hgt hcl ecl pid
+
+                        if str(combinedString) == "byr":
+                            dataPointCount += 2
+                            # print("found " + combinedString)
+                            '''because these are more important than cid. if you have 7 and one is cid,
+                            it should not pass, but if you have 7 and none are cid then it should.
+                            basically, these are worth 2 so if you have 7 of them, the count is 14, but if 1 is cid, the count
+                            is 13 and it doesnt pass. '''
+                        elif str(combinedString) == "iyr":
+                            dataPointCount += 2
+                            # print("found " + combinedString)
+                        elif str(combinedString) == "eyr":
+                            dataPointCount += 2
+                            # print("found " + combinedString)
+                        elif str(combinedString) == "hgt":
+                            dataPointCount += 2
+                            # print("found " + combinedString)
+                        elif str(combinedString) == "hcl":
+                            dataPointCount += 2
+                            # print("found " + combinedString)
+                        elif str(combinedString) == "ecl":
+                            dataPointCount += 2
+                            # print("found " + combinedString)
+                        elif str(combinedString) == "pid":
+                            dataPointCount += 2
+                            # print("found " + combinedString)
+
+                        elif combinedString == "cid":
+                            dataPointCount += 1
+                            # print("found " + combinedString)
+
